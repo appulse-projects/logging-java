@@ -5,6 +5,30 @@
 
 This is a common appulse's logging project. It contains all needed dependencies and, also, colorizing for logging output.
 
+## Usage
+
+Just add dependency to your project.
+
+**Maven**:
+
+```xml
+<dependencies>
+    ...
+    <dependency>
+        <groupId>io.appulse</groupId>
+        <artifactId>logging-java</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+    ...
+</dependencies>
+```
+
+**Gradle**:
+
+```groovy
+compile 'io.appulse:logging-java:1.0.0'
+```
+
 ## Development
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
