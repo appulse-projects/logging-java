@@ -33,4 +33,5 @@ deploy:
   name: $project_version
 
 after_deploy:
-  mvn --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=true -B -U
+  - mvn --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=false -B -V
+  - echo "POPA"
