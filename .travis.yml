@@ -17,6 +17,7 @@ script:
 before_deploy:
   - mvn help:evaluate -N -Dexpression=project.version | grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version | grep -v '\[')
+  - mvn --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 deploy:
   provider: releases
@@ -31,7 +32,3 @@ deploy:
     tags: true
     repo: appulse-projects/logging-java
   name: $project_version
-
-after_deploy:
-  - mvn --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=false -B -V
-  - echo "POPA"
