@@ -66,9 +66,13 @@ limitations under the License.
   </scm>
 
   <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
     <repository>
-      <id>bintray</id>
-      <url>https://api.bintray.com/maven/appulse/maven/logging-java/;publish=1</url>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
 
@@ -76,6 +80,11 @@ limitations under the License.
     <system>Github</system>
     <url>https://github.com/appulse-projects/logging-java/issues</url>
   </issueManagement>
+
+  <ciManagement>
+    <system>Travis</system>
+    <url>https://travis-ci.org/appulse-projects/logging-java</url>
+  </ciManagement>
 
   <developers>
     <developer>
