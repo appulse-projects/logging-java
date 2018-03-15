@@ -25,16 +25,18 @@ import static io.appulse.logging.AnsiColor.MAGENTA;
 import static io.appulse.logging.AnsiColor.RED;
 import static io.appulse.logging.AnsiColor.YELLOW;
 import static io.appulse.logging.AnsiStyle.FAINT;
+import static java.util.Optional.ofNullable;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import io.appulse.logging.AnsiElement;
 import io.appulse.logging.AnsiOutput;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.pattern.CompositeConverter;
+import lombok.val;
 
 /**
  * Logback {@link CompositeConverter} colors output using the {@link AnsiOutput} class. A
@@ -48,38 +50,34 @@ public class ColorConverter extends CompositeConverter<ILoggingEvent> {
 
   private static final Map<String, AnsiElement> ELEMENTS;
 
-  static {
-    Map<String, AnsiElement> ansiElements = new HashMap<>();
-    ansiElements.put("faint", FAINT);
-    ansiElements.put("red", RED);
-    ansiElements.put("green", GREEN);
-    ansiElements.put("yellow", YELLOW);
-    ansiElements.put("blue", BLUE);
-    ansiElements.put("magenta", MAGENTA);
-    ansiElements.put("cyan", CYAN);
-
-    ELEMENTS = Collections.unmodifiableMap(ansiElements);
-  }
-
   private static final Map<Integer, AnsiElement> LEVELS;
 
   static {
-    Map<Integer, AnsiElement> ansiLevels = new HashMap<>();
-    ansiLevels.put(ERROR_INTEGER, RED);
-    ansiLevels.put(WARN_INTEGER, YELLOW);
-    LEVELS = Collections.unmodifiableMap(ansiLevels);
+    ELEMENTS = new ConcurrentHashMap<>();
+    ELEMENTS.put("faint", FAINT);
+    ELEMENTS.put("red", RED);
+    ELEMENTS.put("green", GREEN);
+    ELEMENTS.put("yellow", YELLOW);
+    ELEMENTS.put("blue", BLUE);
+    ELEMENTS.put("magenta", MAGENTA);
+    ELEMENTS.put("cyan", CYAN);
+
+    LEVELS = new ConcurrentHashMap<>();
+    LEVELS.put(ERROR_INTEGER, RED);
+    LEVELS.put(WARN_INTEGER, YELLOW);
   }
 
   @Override
   protected String transform (ILoggingEvent event, String in) {
-    AnsiElement element = ELEMENTS.get(getFirstOption());
-    if (element == null) {
-      // Assume highlighting
-      element = LEVELS.get(event.getLevel().toInteger());
-      element = element == null
-                ? GREEN
-                : element;
-    }
+    val element = ofNullable(getFirstOption())
+        .map(ELEMENTS::get)
+        .filter(Objects::nonNull)
+        .orElseGet(() -> ofNullable(event.getLevel().toInteger())
+            .map(LEVELS::get)
+            .filter(Objects::nonNull)
+            .orElse(GREEN)
+        );
+
     return toAnsiString(in, element);
   }
 

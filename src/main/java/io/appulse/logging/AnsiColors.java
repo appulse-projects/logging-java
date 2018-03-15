@@ -36,10 +36,9 @@ import static java.awt.color.ColorSpace.CS_CIEXYZ;
 
 import java.awt.Color;
 import java.awt.color.ColorSpace;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.NonNull;
 
@@ -54,25 +53,23 @@ public final class AnsiColors {
   private static final Map<AnsiColor, LabColor> ANSI_COLOR_MAP;
 
   static {
-    Map<AnsiColor, LabColor> colorMap = new LinkedHashMap<>();
-    colorMap.put(BLACK, new LabColor(0x000000));
-    colorMap.put(RED, new LabColor(0xAA0000));
-    colorMap.put(GREEN, new LabColor(0x00AA00));
-    colorMap.put(YELLOW, new LabColor(0xAA5500));
-    colorMap.put(BLUE, new LabColor(0x0000AA));
-    colorMap.put(MAGENTA, new LabColor(0xAA00AA));
-    colorMap.put(CYAN, new LabColor(0x00AAAA));
-    colorMap.put(WHITE, new LabColor(0xAAAAAA));
-    colorMap.put(BRIGHT_BLACK, new LabColor(0x555555));
-    colorMap.put(BRIGHT_RED, new LabColor(0xFF5555));
-    colorMap.put(BRIGHT_GREEN, new LabColor(0x55FF00));
-    colorMap.put(BRIGHT_YELLOW, new LabColor(0xFFFF55));
-    colorMap.put(BRIGHT_BLUE, new LabColor(0x5555FF));
-    colorMap.put(BRIGHT_MAGENTA, new LabColor(0xFF55FF));
-    colorMap.put(BRIGHT_CYAN, new LabColor(0x55FFFF));
-    colorMap.put(BRIGHT_WHITE, new LabColor(0xFFFFFF));
-
-    ANSI_COLOR_MAP = Collections.unmodifiableMap(colorMap);
+    ANSI_COLOR_MAP = new ConcurrentHashMap<>();
+    ANSI_COLOR_MAP.put(BLACK, new LabColor(0x000000));
+    ANSI_COLOR_MAP.put(RED, new LabColor(0xAA0000));
+    ANSI_COLOR_MAP.put(GREEN, new LabColor(0x00AA00));
+    ANSI_COLOR_MAP.put(YELLOW, new LabColor(0xAA5500));
+    ANSI_COLOR_MAP.put(BLUE, new LabColor(0x0000AA));
+    ANSI_COLOR_MAP.put(MAGENTA, new LabColor(0xAA00AA));
+    ANSI_COLOR_MAP.put(CYAN, new LabColor(0x00AAAA));
+    ANSI_COLOR_MAP.put(WHITE, new LabColor(0xAAAAAA));
+    ANSI_COLOR_MAP.put(BRIGHT_BLACK, new LabColor(0x555555));
+    ANSI_COLOR_MAP.put(BRIGHT_RED, new LabColor(0xFF5555));
+    ANSI_COLOR_MAP.put(BRIGHT_GREEN, new LabColor(0x55FF00));
+    ANSI_COLOR_MAP.put(BRIGHT_YELLOW, new LabColor(0xFFFF55));
+    ANSI_COLOR_MAP.put(BRIGHT_BLUE, new LabColor(0x5555FF));
+    ANSI_COLOR_MAP.put(BRIGHT_MAGENTA, new LabColor(0xFF55FF));
+    ANSI_COLOR_MAP.put(BRIGHT_CYAN, new LabColor(0x55FFFF));
+    ANSI_COLOR_MAP.put(BRIGHT_WHITE, new LabColor(0xFFFFFF));
   }
 
   private AnsiColors () {

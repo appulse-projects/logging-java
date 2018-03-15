@@ -40,6 +40,7 @@ import lombok.experimental.FieldDefaults;
  * @author Artem Labazin
  * @since 1.0.0
  */
+@SuppressWarnings("PMD.MoreThanOneLogger")
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 class LogbackConfigurator {
 
