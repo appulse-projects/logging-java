@@ -35,8 +35,8 @@ import org.junit.Test;
 /**
  * Tests for default Logback configuration provided by {@code base.xml}.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public class LogbackConfigurationTest {
 

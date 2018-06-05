@@ -19,12 +19,15 @@ package io.appulse.logging;
 /**
  * An ANSI encodable element.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public interface AnsiElement {
 
   /**
+   * Overrides default {@code toString()} method for {@link AnsiElement} instances,
+   * which should returns element's code.
+   *
    * @return the ANSI escape code
    */
   @Override

@@ -16,15 +16,18 @@
 
 package io.appulse.logging.logback;
 
+import static ch.qos.logback.classic.Level.DEBUG;
+import static ch.qos.logback.classic.Level.ERROR;
+import static ch.qos.logback.classic.Level.TRACE;
+import static ch.qos.logback.classic.Level.WARN;
+import static io.appulse.logging.AnsiOutput.Enabled.ALWAYS;
+import static io.appulse.logging.AnsiOutput.Enabled.DETECT;
+import static java.util.Collections.singletonList;
 import static lombok.AccessLevel.PRIVATE;
-
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import io.appulse.logging.AnsiOutput;
 
-import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.LoggingEvent;
 import lombok.experimental.FieldDefaults;
 import org.junit.AfterClass;
@@ -47,96 +50,105 @@ public class ColorConverterTest {
 
   final String in = "in";
 
+  /**
+   * Initialize {@link AnsiOutput} with {@link Enabled#ALWAYS}.
+   */
   @BeforeClass
-  public static void setupAnsi () {
-    AnsiOutput.setEnabled(AnsiOutput.Enabled.ALWAYS);
+  public static void beforeClass () {
+    AnsiOutput.setEnabled(ALWAYS);
   }
 
+  /**
+   * Returns {@link AnsiOutput} state to default value - {@link Enabled#DETECT}.
+   */
   @AfterClass
-  public static void resetAnsi () {
-    AnsiOutput.setEnabled(AnsiOutput.Enabled.DETECT);
+  public static void afterClass () {
+    AnsiOutput.setEnabled(DETECT);
   }
 
+  /**
+   * Re-initialize {@code converter} and {@code event}.
+   */
   @Before
-  public void setup () {
-    this.converter = new ColorConverter();
-    this.event = new LoggingEvent();
+  public void before () {
+    converter = new ColorConverter();
+    event = new LoggingEvent();
   }
 
   @Test
   public void faint () {
-    this.converter.setOptionList(Collections.singletonList("faint"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[2min\033[0;39m", out);
+    converter.setOptionList(singletonList("faint"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[2min\033[0;39m");
   }
 
   @Test
   public void red () {
-    this.converter.setOptionList(Collections.singletonList("red"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[31min\033[0;39m", out);
+    converter.setOptionList(singletonList("red"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[31min\033[0;39m");
   }
 
   @Test
   public void green () {
-    this.converter.setOptionList(Collections.singletonList("green"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[32min\033[0;39m", out);
+    converter.setOptionList(singletonList("green"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[32min\033[0;39m");
   }
 
   @Test
   public void yellow () {
-    this.converter.setOptionList(Collections.singletonList("yellow"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[33min\033[0;39m", out);
+    converter.setOptionList(singletonList("yellow"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[33min\033[0;39m");
   }
 
   @Test
   public void blue () {
-    this.converter.setOptionList(Collections.singletonList("blue"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[34min\033[0;39m", out);
+    converter.setOptionList(singletonList("blue"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[34min\033[0;39m");
   }
 
   @Test
   public void magenta () {
-    this.converter.setOptionList(Collections.singletonList("magenta"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[35min\033[0;39m", out);
+    converter.setOptionList(singletonList("magenta"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[35min\033[0;39m");
   }
 
   @Test
   public void cyan () {
-    this.converter.setOptionList(Collections.singletonList("cyan"));
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[36min\033[0;39m", out);
+    converter.setOptionList(singletonList("cyan"));
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[36min\033[0;39m");
   }
 
   @Test
   public void highlightError () {
-    this.event.setLevel(Level.ERROR);
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[31min\033[0;39m", out);
+    event.setLevel(ERROR);
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[31min\033[0;39m");
   }
 
   @Test
   public void highlightWarn () {
-    this.event.setLevel(Level.WARN);
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[33min\033[0;39m", out);
+    event.setLevel(WARN);
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[33min\033[0;39m");
   }
 
   @Test
   public void highlightDebug () {
-    this.event.setLevel(Level.DEBUG);
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[32min\033[0;39m", out);
+    event.setLevel(DEBUG);
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[32min\033[0;39m");
   }
 
   @Test
   public void highlightTrace () {
-    this.event.setLevel(Level.TRACE);
-    String out = this.converter.transform(this.event, this.in);
-    assertEquals("\033[32min\033[0;39m", out);
+    event.setLevel(TRACE);
+    assertThat(converter.transform(event, in))
+        .isEqualTo("\033[32min\033[0;39m");
   }
 }

@@ -45,10 +45,10 @@ import lombok.NonNull;
 /**
  * Utility for working with {@link AnsiColor} in the context of {@link Color AWT Colors}.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
-public final class AnsiColors {
+final class AnsiColors {
 
   private static final Map<AnsiColor, LabColor> ANSI_COLOR_MAP;
 
@@ -75,7 +75,7 @@ public final class AnsiColors {
   private AnsiColors () {
   }
 
-  public static AnsiColor getClosest (Color color) {
+  static AnsiColor getClosest (Color color) {
     return getClosest(new LabColor(color));
   }
 

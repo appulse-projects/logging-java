@@ -25,8 +25,8 @@ import ch.qos.logback.classic.spi.IThrowableProxy;
  * {@link ExtendedThrowableProxyConverter} that adds some additional whitespace around the
  * stack trace.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public class ExtendedWhitespaceThrowableProxyConverter extends ExtendedThrowableProxyConverter {
 

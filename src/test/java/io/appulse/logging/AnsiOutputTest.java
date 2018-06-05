@@ -16,6 +16,8 @@
 
 package io.appulse.logging;
 
+import static io.appulse.logging.AnsiOutput.Enabled.ALWAYS;
+import static io.appulse.logging.AnsiOutput.Enabled.DETECT;
 import static org.junit.Assert.assertEquals;
 
 import io.appulse.logging.AnsiOutput.Enabled;
@@ -27,19 +29,25 @@ import org.junit.Test;
 /**
  * Tests for {@link AnsiOutput}.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public class AnsiOutputTest {
 
+  /**
+   * Initialize {@link AnsiOutput} with {@link Enabled#ALWAYS}.
+   */
   @BeforeClass
-  public static void enable () {
-    AnsiOutput.setEnabled(Enabled.ALWAYS);
+  public static void beforeClass () {
+    AnsiOutput.setEnabled(ALWAYS);
   }
 
+  /**
+   * Returns {@link AnsiOutput} state to default value - {@link Enabled#DETECT}.
+   */
   @AfterClass
-  public static void reset () {
-    AnsiOutput.setEnabled(Enabled.DETECT);
+  public static void afterClass () {
+    AnsiOutput.setEnabled(DETECT);
   }
 
   @Test

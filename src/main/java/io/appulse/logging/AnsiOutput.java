@@ -16,26 +16,24 @@
 
 package io.appulse.logging;
 
+import static io.appulse.logging.AnsiColor.DEFAULT;
 import static java.util.Locale.US;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 import lombok.NonNull;
+import lombok.val;
 
 /**
  * Generates ANSI encoded output, automatically attempting to detect if the terminal
  * supports ANSI.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public final class AnsiOutput {
 
   private static final String ENCODE_JOIN = ";";
-
-  private static Enabled enabled = Enabled.DETECT;
-
-  private static Boolean consoleAvailable;
-
-  private static Boolean ansiCapable;
 
   private static final String OPERATING_SYSTEM_NAME = System.getProperty("os.name").toLowerCase(US);
 
@@ -43,10 +41,17 @@ public final class AnsiOutput {
 
   private static final String ENCODE_END = "m";
 
-  private static final String RESET = "0;" + AnsiColor.DEFAULT;
+  private static final String RESET = "0;" + DEFAULT;
+
+  private static Enabled enabled = Enabled.DETECT;
+
+  private static Boolean consoleAvailable;
+
+  private static AtomicReference<Boolean> ansiCapable = new AtomicReference<>();
 
   /**
    * Sets if ANSI output is enabled.
+   *
    * @param enabled if ANSI is enabled, disabled or detected
    */
   public static void setEnabled (@NonNull Enabled enabled) {
@@ -55,20 +60,19 @@ public final class AnsiOutput {
 
   /**
    * Sets if the System.console() is known to be available.
+   *
    * @param consoleAvailable if the console is known to be available or {@code null} to
-   * use standard detection logic.
+   *                         use standard detection logic.
    */
   public static void setConsoleAvailable (Boolean consoleAvailable) {
     AnsiOutput.consoleAvailable = consoleAvailable;
   }
 
-  static Enabled getEnabled () {
-    return AnsiOutput.enabled;
-  }
-
   /**
    * Encode a single {@link AnsiElement} if output is enabled.
+   *
    * @param element the element to encode
+   *
    * @return the encoded element or an empty string
    */
   public static String encode (AnsiElement element) {
@@ -81,7 +85,9 @@ public final class AnsiOutput {
   /**
    * Create a new ANSI string from the specified elements. Any {@link AnsiElement}s will
    * be encoded as required.
+   *
    * @param elements the elements to encode
+   *
    * @return a string of the encoded elements
    */
   public static String toString (Object... elements) {
@@ -92,6 +98,10 @@ public final class AnsiOutput {
       buildDisabled(sb, elements);
     }
     return sb.toString();
+  }
+
+  static Enabled getEnabled () {
+    return AnsiOutput.enabled;
   }
 
   private static void buildEnabled (StringBuilder sb, Object[] elements) {
@@ -129,15 +139,18 @@ public final class AnsiOutput {
     }
   }
 
-  @SuppressWarnings("PMD.NonThreadSafeSingleton")
   private static boolean isEnabled () {
     if (enabled != Enabled.DETECT) {
       return enabled == Enabled.ALWAYS;
     }
-    if (ansiCapable == null) {
-      ansiCapable = detectIfAnsiCapable();
+    val value = ansiCapable.get();
+    if (value != null) {
+      return value;
     }
-    return ansiCapable;
+    return ansiCapable.updateAndGet(it -> it == null
+        ? detectIfAnsiCapable()
+        : it
+    );
   }
 
   private static boolean detectIfAnsiCapable () {

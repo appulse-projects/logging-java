@@ -17,7 +17,7 @@ Just add dependency to your project.
     <dependency>
         <groupId>io.appulse</groupId>
         <artifactId>logging-java</artifactId>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
     </dependency>
     ...
 </dependencies>
@@ -26,8 +26,67 @@ Just add dependency to your project.
 **Gradle**:
 
 ```groovy
-compile 'io.appulse:logging-java:1.0.2'
+compile 'io.appulse:logging-java:1.1.0'
 ```
+
+And use it as usual:
+
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class SomeClass {
+
+  Logger log = LoggerFactory.getLogger(SomeClass.class);
+
+  public void doSomeLog () {
+    log.info("info message");
+    log.warn("warn message");
+    log.error("error message");
+  }
+}
+```
+
+or, if you use a Lombok Project:
+
+```java
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class SomeClass {
+
+  public void doSomeLog () {
+    log.info("info message");
+    log.warn("warn message");
+    log.error("error message");
+  }
+}
+```
+
+With default configuration (no `logback.xml` in classpath at all) it looks like:
+
+![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/override_example.png?raw=true)
+
+You also could to override default `logback`'s configuration, like an example below.
+
+**resources/logback.xml**:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+  <property
+    name="CONSOLE_LOG_PATTERN"
+    value="${CONSOLE_LOG_PATTERN:-%clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([%25.25thread]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
+  />
+
+  <include resource="io/appulse/logging/logback/base.xml"/>
+</configuration>
+```
+
+And output will be like:
+
+![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/override_example.png?raw=true)
 
 ## Development
 

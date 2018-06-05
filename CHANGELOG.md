@@ -11,6 +11,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add different logging frameworks.
 
+## [1.1.0](https://github.com/appulse-projects/logging-java/releases/tag/1.1.0) - 2018-06-05
+
+Reorganized code.
+
+### Added
+
+- JavaDoc comments.
+- Default `logback.xml` configuration (just includes `default.xml` config).
+
+### Removed
+
+- `AnsiBackground`.
+- `LogbackConfigurator`.
+- `AnsiOutputEnabledValue`.
+
 ## [1.0.2](https://github.com/appulse-projects/logging-java/releases/tag/1.0.2) - 2018-03-15
 
 Small refactoring

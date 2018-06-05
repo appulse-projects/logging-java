@@ -43,8 +43,8 @@ import lombok.val;
  * single 'color' option can be provided to the converter, or if not specified color will
  * be picked based on the logging level.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
 public class ColorConverter extends CompositeConverter<ILoggingEvent> {
 

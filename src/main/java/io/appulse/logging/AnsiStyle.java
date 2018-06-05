@@ -16,21 +16,44 @@
 
 package io.appulse.logging;
 
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+
 /**
  * {@link AnsiElement Ansi} styles.
  *
- * @author Artem Labazin
  * @since 1.0.0
+ * @author Artem Labazin
  */
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public enum AnsiStyle implements AnsiElement {
 
+  /**
+   * Normal font style.
+   */
   NORMAL("0"),
+
+  /**
+   * Bold font style.
+   */
   BOLD("1"),
+
+  /**
+   * Faint font style.
+   */
   FAINT("2"),
+
+  /**
+   * Italic font style.
+   */
   ITALIC("3"),
+
+  /**
+   * Underline font style.
+   */
   UNDERLINE("4");
 
-  private final String code;
+  String code;
 
   AnsiStyle (String code) {
     this.code = code;
@@ -38,6 +61,6 @@ public enum AnsiStyle implements AnsiElement {
 
   @Override
   public String toString () {
-    return this.code;
+    return code;
   }
 }
