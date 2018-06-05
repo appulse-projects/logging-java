@@ -86,7 +86,7 @@ You also could to override default `logback`'s configuration, like an example be
 
 And output will be like:
 
-![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/override_example.png?raw=true)
+![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/example.png?raw=true)
 
 ## Development
 
