@@ -65,7 +65,7 @@ public class SomeClass {
 
 With default configuration (no `logback.xml` in classpath at all) it looks like:
 
-![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/override_example.png?raw=true)
+![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/example.png?raw=true)
 
 You also could to override default `logback`'s configuration, like an example below.
 
@@ -86,7 +86,7 @@ You also could to override default `logback`'s configuration, like an example be
 
 And output will be like:
 
-![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/example.png?raw=true)
+![override example](https://github.com/appulse-projects/logging-java/blob/master/.images/override_example.png?raw=true)
 
 ## Development
 
