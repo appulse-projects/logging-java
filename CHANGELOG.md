@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add different logging frameworks.
 
+## [1.1.1](https://github.com/appulse-projects/logging-java/releases/tag/1.1.1) - 2019-03-02
+
+### Changed
+
+- Updated dependencies;
+- Changed copyright.
+
 ## [1.1.0](https://github.com/appulse-projects/logging-java/releases/tag/1.1.0) - 2018-06-05
 
 Reorganized code.

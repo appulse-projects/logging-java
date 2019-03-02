@@ -16,8 +16,7 @@
 
 package io.appulse.logging.logback;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 
@@ -30,7 +29,7 @@ import ch.qos.logback.core.ConsoleAppender;
 import ch.qos.logback.core.FileAppender;
 import ch.qos.logback.core.encoder.Encoder;
 import ch.qos.logback.core.joran.spi.JoranException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for default Logback configuration provided by {@code base.xml}.
@@ -38,32 +37,36 @@ import org.junit.Test;
  * @since 1.0.0
  * @author Artem Labazin
  */
-public class LogbackConfigurationTest {
+class LogbackConfigurationTest {
 
   @Test
-  public void consolePatternCanBeOverridden () throws JoranException {
+  void consolePatternCanBeOverridden () throws JoranException {
     JoranConfigurator configurator = new JoranConfigurator();
     LoggerContext context = new LoggerContext();
     configurator.setContext(context);
     configurator.doConfigure(new File("src/test/resources/custom-console-log-pattern.xml"));
+
     Appender<ILoggingEvent> appender = context.getLogger("ROOT").getAppender("CONSOLE");
-    assertTrue(appender instanceof ConsoleAppender);
+    assertThat(appender).isInstanceOf(ConsoleAppender.class);
+
     Encoder<?> encoder = ((ConsoleAppender<?>) appender).getEncoder();
-    assertTrue(encoder instanceof PatternLayoutEncoder);
-    assertEquals("foo", ((PatternLayoutEncoder) encoder).getPattern());
+    assertThat(encoder).isInstanceOf(PatternLayoutEncoder.class);
+    assertThat(((PatternLayoutEncoder) encoder).getPattern()).isEqualTo("foo");
   }
 
   @Test
-  public void filePatternCanBeOverridden () throws JoranException {
+  void filePatternCanBeOverridden () throws JoranException {
     JoranConfigurator configurator = new JoranConfigurator();
     LoggerContext context = new LoggerContext();
     configurator.setContext(context);
     configurator
         .doConfigure(new File("src/test/resources/custom-file-log-pattern.xml"));
+
     Appender<ILoggingEvent> appender = context.getLogger("ROOT").getAppender("FILE");
-    assertTrue(appender instanceof FileAppender);
+    assertThat(appender).isInstanceOf(FileAppender.class);
+
     Encoder<?> encoder = ((FileAppender<?>) appender).getEncoder();
-    assertTrue(encoder instanceof PatternLayoutEncoder);
-    assertEquals("bar", ((PatternLayoutEncoder) encoder).getPattern());
+    assertThat(encoder).isInstanceOf(PatternLayoutEncoder.class);
+    assertThat(((PatternLayoutEncoder) encoder).getPattern()).isEqualTo("bar");
   }
 }

@@ -17,13 +17,12 @@
 package io.appulse.logging.logback;
 
 import static lombok.AccessLevel.PRIVATE;
-
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 import lombok.experimental.FieldDefaults;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link WhitespaceThrowableProxyConverter}.
@@ -32,7 +31,7 @@ import org.junit.Test;
  * @since 1.0.0
  */
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class WhitespaceThrowableProxyConverterTest {
+class WhitespaceThrowableProxyConverterTest {
 
   private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
@@ -41,16 +40,17 @@ public class WhitespaceThrowableProxyConverterTest {
   LoggingEvent event = new LoggingEvent();
 
   @Test
-  public void noStackTrace () {
+  void noStackTrace () {
     String s = converter.convert(event);
-    assertTrue(s.isEmpty());
+    assertThat(s).isEmpty();
   }
 
   @Test
-  public void withStackTrace () {
+  void withStackTrace () {
     event.setThrowableProxy(new ThrowableProxy(new RuntimeException()));
     String s = converter.convert(event);
-    assertTrue(s.startsWith(LINE_SEPARATOR));
-    assertTrue(s.endsWith(LINE_SEPARATOR));
+    assertThat(s).startsWith(LINE_SEPARATOR);
+    assertThat(s).startsWith(LINE_SEPARATOR);
+    assertThat(s).endsWith(LINE_SEPARATOR);
   }
 }

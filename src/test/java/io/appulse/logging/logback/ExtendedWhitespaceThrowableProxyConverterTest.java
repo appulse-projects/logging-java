@@ -17,13 +17,12 @@
 package io.appulse.logging.logback;
 
 import static lombok.AccessLevel.PRIVATE;
-
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import ch.qos.logback.classic.spi.LoggingEvent;
 import ch.qos.logback.classic.spi.ThrowableProxy;
 import lombok.experimental.FieldDefaults;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link ExtendedWhitespaceThrowableProxyConverter}.
@@ -32,7 +31,7 @@ import org.junit.Test;
  * @since 1.0.0
  */
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class ExtendedWhitespaceThrowableProxyConverterTest {
+class ExtendedWhitespaceThrowableProxyConverterTest {
 
   private static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
@@ -41,16 +40,15 @@ public class ExtendedWhitespaceThrowableProxyConverterTest {
   LoggingEvent event = new LoggingEvent();
 
   @Test
-  public void noStackTrace () {
-    String s = this.converter.convert(this.event);
-    assertTrue(s.isEmpty());
+  void noStackTrace () {
+    assertThat(converter.convert(event)).isEmpty();
   }
 
   @Test
-  public void withStackTrace () {
-    this.event.setThrowableProxy(new ThrowableProxy(new RuntimeException()));
-    String s = this.converter.convert(this.event);
-    assertTrue(s.startsWith(LINE_SEPARATOR));
-    assertTrue(s.endsWith(LINE_SEPARATOR));
+  void withStackTrace () {
+    event.setThrowableProxy(new ThrowableProxy(new RuntimeException()));
+    String string = converter.convert(event);
+    assertThat(string).startsWith(LINE_SEPARATOR);
+    assertThat(string).endsWith(LINE_SEPARATOR);
   }
 }

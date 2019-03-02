@@ -18,13 +18,13 @@ package io.appulse.logging;
 
 import static io.appulse.logging.AnsiOutput.Enabled.ALWAYS;
 import static io.appulse.logging.AnsiOutput.Enabled.DETECT;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import io.appulse.logging.AnsiOutput.Enabled;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for {@link AnsiOutput}.
@@ -32,26 +32,26 @@ import org.junit.Test;
  * @since 1.0.0
  * @author Artem Labazin
  */
-public class AnsiOutputTest {
+class AnsiOutputTest {
 
   /**
    * Initialize {@link AnsiOutput} with {@link Enabled#ALWAYS}.
    */
-  @BeforeClass
-  public static void beforeClass () {
+  @BeforeAll
+  static void beforeAll () {
     AnsiOutput.setEnabled(ALWAYS);
   }
 
   /**
    * Returns {@link AnsiOutput} state to default value - {@link Enabled#DETECT}.
    */
-  @AfterClass
-  public static void afterClass () {
+  @AfterAll
+  static void afterAll () {
     AnsiOutput.setEnabled(DETECT);
   }
 
   @Test
-  public void encoding () {
+  void encoding () {
     String encoded = AnsiOutput.toString(
         "A", AnsiColor.RED, AnsiStyle.BOLD,
         "B", AnsiStyle.NORMAL,
@@ -59,6 +59,8 @@ public class AnsiOutputTest {
         "E", AnsiStyle.FAINT,
         "F"
     );
-    assertEquals("A[31;1mB[0mD[32mE[2mF[0;39m", encoded);
+
+    assertThat(encoded)
+        .isEqualTo("A[31;1mB[0mD[32mE[2mF[0;39m");
   }
 }

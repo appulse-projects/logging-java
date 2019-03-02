@@ -139,7 +139,7 @@ public final class AnsiOutput {
     }
   }
 
-  private static boolean isEnabled () {
+  private static Boolean isEnabled () {
     if (enabled != Enabled.DETECT) {
       return enabled == Enabled.ALWAYS;
     }
@@ -148,12 +148,12 @@ public final class AnsiOutput {
       return value;
     }
     return ansiCapable.updateAndGet(it -> it == null
-        ? detectIfAnsiCapable()
-        : it
+           ? detectIfAnsiCapable()
+           : it
     );
   }
 
-  private static boolean detectIfAnsiCapable () {
+  private static Boolean detectIfAnsiCapable () {
     try {
       if (consoleAvailable != null && !consoleAvailable) {
         return false;
