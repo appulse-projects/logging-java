@@ -2,6 +2,7 @@
 
 [![build_status](https://travis-ci.org/appulse-projects/logging-java.svg?branch=master)](https://travis-ci.org/appulse-projects/logging-java)
 [![maven_central](https://maven-badges.herokuapp.com/maven-central/io.appulse/logging-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.appulse/logging-java)
+[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 Common logging project for Appulse project. It contains all required dependencies as well as colorizing configurations for logging output.
 
