@@ -18,7 +18,7 @@ Just add dependency to your project.
     <dependency>
         <groupId>io.appulse</groupId>
         <artifactId>logging-java</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </dependency>
     ...
 </dependencies>
@@ -27,7 +27,7 @@ Just add dependency to your project.
 **Gradle**:
 
 ```groovy
-compile 'io.appulse:logging-java:1.1.1'
+compile 'io.appulse:logging-java:1.1.2'
 ```
 
 And use it as usual:

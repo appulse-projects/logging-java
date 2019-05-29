@@ -133,7 +133,7 @@ final class AnsiColors {
     }
 
     private double function (double value) {
-      return value > (216.0 / 24389.0)
+      return value > (216.0 / 24_389.0)
              ? Math.cbrt(value)
              : (1.0 / 3.0) * Math.pow(29.0 / 6.0, 2) * value + (4.0 / 29.0);
     }
