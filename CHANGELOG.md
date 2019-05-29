@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Updated dependencies;
+- Force the Travise use Maven wrapper instead of direct version;
 - Some PMD errors.
 
 ## [1.1.1](https://github.com/appulse-projects/logging-java/releases/tag/1.1.1) - 2019-03-02
