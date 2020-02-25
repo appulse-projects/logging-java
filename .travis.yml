@@ -11,16 +11,16 @@ before_install:
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
 
 install:
-  ./mvnw --settings .settings.xml install -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
+  ./mvnw --settings .settings.xml compile -DskipTests=true -Dgpg.skip -Dmaven.javadoc.skip=true -B -V
 
 script:
-  ./mvnw --settings .settings.xml clean verify -DskipTests=false -Dmaven.javadoc.skip=true -B -U
+  ./mvnw --settings .settings.xml verify -DskipTests=false -Dmaven.javadoc.skip=true -B -U
 
 before_deploy:
   - ./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\['
   - export project_version=$(./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\[')
   - sed -i -- "s/\${env.SONATYPE_PASSWORD}/$SONATYPE_PASSWORD/g" .settings.xml
-  - ./mvnw --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=false -B -U
+  - ./mvnw --settings .settings.xml deploy -DskipTests=true -Dmaven.javadoc.skip=false -B
 
 deploy:
   provider: releases
